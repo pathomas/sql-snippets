@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <_locDefinition xmlns="urn:locstudio">
+	<_locDefault _loc="locNone" />
+	<_locTag _loc="locData">Title</_locTag>
+	<_locTag _loc="locData">Description</_locTag>
+	<_locTag _loc="locData">Author</_locTag>
+	<_locTag _loc="locData">ToolTip</_locTag>
+	<_locTag _loc="locData">Default</_locTag>
+  </_locDefinition>
+  <CodeSnippet Format="1.0.0">
+	<Header>
+	  <Title>Column Exists</Title>
+	  <Shortcut></Shortcut>
+	  <Description>Check is Column Exists</Description>
+	  <Author>Paul Thomas</Author>
+	  <SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	  </SnippetTypes>
+	</Header>
+	<Snippet>
+	  <Declarations>
+		  <Literal>
+			  <ID>ColumnName</ID>
+			  <ToolTip>Column check.</ToolTip>
+			  <Default>Col3</Default>
+		  </Literal>
+		  <Literal>
+			  <ID>TableName</ID>
+			  <ToolTip>Table to check.</ToolTip>
+			  <Default>Test</Default>
+		  </Literal>
+	  </Declarations>
+	  <Code Language="SQL">
+		<![CDATA[
+IF NOT EXISTS(SELECT 1 FROM sys.Columns 
+			WHERE object_id IN (SELECT object_id FROM sys.Tables WHERE Name = '$TableName$')
+				AND NAME = '$ColumnName$'
+				--AND is_nullable = 0
+				)
+BEGIN 
+	ALTER TABLE $TableName$ 
+		ADD COLUMN $ColumnName$ VARCHAR(10) -- NOT NULL
+END
+
+
+]]>
+	  </Code>
+	</Snippet>
+  </CodeSnippet>
+</CodeSnippets>

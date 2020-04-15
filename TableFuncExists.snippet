@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <_locDefinition xmlns="urn:locstudio">
+	<_locDefault _loc="locNone" />
+	<_locTag _loc="locData">Title</_locTag>
+	<_locTag _loc="locData">Description</_locTag>
+	<_locTag _loc="locData">Author</_locTag>
+	<_locTag _loc="locData">ToolTip</_locTag>
+	<_locTag _loc="locData">Default</_locTag>
+  </_locDefinition>
+  <CodeSnippet Format="1.0.0">
+	<Header>
+	  <Title>Table Function Exists</Title>
+	  <Shortcut></Shortcut>
+	  <Description>Check if Table Function Exists</Description>
+	  <Author>Paul Thomas</Author>
+	  <SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	  </SnippetTypes>
+	</Header>
+	<Snippet>
+	  <Declarations>
+		  <Literal>
+			  <ID>Procedure</ID>
+			  <ToolTip>Function to check.</ToolTip>
+			  <Default>fn_Test</Default>
+		  </Literal>
+	  </Declarations>
+	  <Code Language="SQL">
+		<![CDATA[
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'dbo.$Procedure$') AND type in (N'TF'))
+   exec('CREATE FUNCTION dbo.$Procedure$() RETURNS @Result TABLE (i INT) AS BEGIN RETURN; END')
+GO
+
+
+]]>
+	  </Code>
+	</Snippet>
+  </CodeSnippet>
+</CodeSnippets>
